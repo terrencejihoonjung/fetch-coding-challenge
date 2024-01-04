@@ -1,32 +1,34 @@
 import Foundation
 
-struct MealDetailResponse: Decodable {
-    let meals: [Meal]
+struct MealDetails: Decodable {
+    let meals: [MealDetail]
 }
 
-struct MealDetail: Decodable {
-    var idMeal: String
+struct MealDetail: Identifiable, Decodable {
+    var id: String
+    var strMeal: String
     var strInstructions: String
     var strMealThumb: String
     
-    // Process ingredients and measurements into an array
-    // compactMap transforms each element of the collection and also unwraps optionals, filtering out any 'nil' values
-    // as? casts value to a String. If property is not a string or is nil, this cast fails and nil is returned
-    // filter method returns new array with non-empty values
-    
+    // Computed properties to put ingredients and measurements into arrays
     var ingredients: [String] {
-        Array(1...20).compactMap { self.getValue(key: "strIngredient\($0)") as? String }.filter { !$0.isEmpty }
+        (1...20).compactMap { self.value(forKey: "strIngredient\($0)") as? String }.filter { !$0.isEmpty }
     }
 
     var measurements: [String] {
-        Array(1...20).compactMap { self.getValue(key: "strMeasure\($0)") as? String }.filter { !$0.isEmpty }
+        (1...20).compactMap { self.value(forKey: "strMeasure\($0)") as? String }.filter { !$0.isEmpty }
     }
     
+    enum CodingKeys: String, CodingKey {
+        case id = "idMeal"
+        case strMeal
+        case strInstructions
+        case strMealThumb
+    }
     
-    // Creates a mirror instance for the current object (JSON data). This allows us to access the data inside the current object.
-    // We then find the first key-value pair using a key search input.
-    private func getValue(key keyString: String) -> Any? {
+    // Get value for a given key
+    private func value(forKey key: String) -> Any? {
         let mirror = Mirror(reflecting: self)
-        return mirror.children.first { $0.label == keyString }?.value
+        return mirror.children.first { $0.label == key }?.value
     }
 }

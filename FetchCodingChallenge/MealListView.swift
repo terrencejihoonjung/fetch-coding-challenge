@@ -1,24 +1,37 @@
-//
-//  ContentView.swift
-//  FetchCodingChallenge
-//
-//  Created by Terrence Jung on 1/3/24.
-//
-
 import SwiftUI
 
-struct ContentView: View {
+struct MealListView: View {
+    // Meals Data
+    @State private var meals: [Meal] = []
+    @State private var errorMessage: String?
+    
+    private var sortedMeals: [Meal] {
+        meals.sorted { $0.strMeal < $1.strMeal }
+    }
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List(sortedMeals, id: \.id) { meal in
+                NavigationLink(destination: MealDetailView(mealId: meal.id)) {
+                    MealRow(meal: meal)
+                }
+            }
+            .navigationTitle("Meals")
+            .onAppear {
+                APIService().fetchMeals { result in
+                    switch result {
+                    case .success(let fetchedMeals):
+                        self.meals = fetchedMeals.meals
+                    case .failure(let error):
+                        self.errorMessage = error.localizedDescription
+                        // Handle the error, e.g., show an alert
+                    }
+                }
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    MealListView()
 }

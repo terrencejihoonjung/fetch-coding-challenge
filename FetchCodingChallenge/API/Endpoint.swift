@@ -1,8 +1,7 @@
-//
-//  Endpoint.swift
-//  FetchCodingChallenge
-//
-//  Created by Terrence Jung on 1/3/24.
-//
-
 import Foundation
+
+struct Endpoint {
+    static let baseUrl = "themealdb.com/api/json/v1/1/"
+    static let meals = "filter.php?c=Dessert"
+    static let mealDetail = "lookup.php?i="
+}

@@ -10,7 +10,7 @@ struct Meals: Decodable {
 struct Meal: Identifiable, Decodable {
     var id: String
     var strMeal: String
-    var strMealThumb: String
+    var strMealThumb: URL?
     
     // CodingKeys maps JSON key "idMeal" to Meal property "id" -> allows us to conform to Identifiable protocol
     enum CodingKeys: String, CodingKey {
