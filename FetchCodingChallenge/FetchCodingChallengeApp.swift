@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+// www.themealdb.com/api/json/v1/1/filter.php?c=Seafood (List of Desserts)
+// www.themealdb.com/api/json/v1/1/lookup.php?i=52772 (Item Detail)
 
 @main
 struct FetchCodingChallengeApp: App {
