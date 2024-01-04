@@ -6,9 +6,9 @@ struct MealDetails: Decodable {
 
 struct MealDetail: Identifiable, Decodable {
     var id: String
-    var strMeal: String
-    var strInstructions: String
-    var strMealThumb: String
+    var strMeal: String?
+    var strInstructions: String?
+    var strMealThumb: URL?
     
     // Computed properties to put ingredients and measurements into arrays
     var ingredients: [String] {

@@ -33,5 +33,5 @@ struct MealRow: View {
 }
 
 #Preview {
-    MealRow(meal: Meal(id: "53049", strMeal: "Apam balik", strMealThumb: URL(string: "https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg")))
+    MealRow(meal: Meal(id: "53049", strMeal: "Apam balik", strMealThumb: URL(string: "https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg")!))
 }
