@@ -22,17 +22,25 @@ struct MealDetailView: View {
             Text(mealDetail?.strMeal ?? "No Name")
                 .font(.title)
             
+            Text(mealDetail?.strInstructions ?? "No Instructions")
+                .font(.body)
+                .padding(.horizontal, 20)
+            
+            Spacer()
+            Spacer()
+            
             Text("Ingredients")
                 .font(.title2)
-            ForEach(0..<20, id: \.self) { index in
-                if let ingredients = mealDetail?.ingredients,
+            VStack(alignment: .leading) {
+                ForEach(0..<20, id: \.self) { index in
+                    if let ingredients = mealDetail?.ingredients,
                        let measurements = mealDetail?.measurements,
                        index < ingredients.count, index < measurements.count {
-                        Text("\(ingredients[index]) - \(measurements[index])")
+                        Text("\(index + 1). \(ingredients[index]) - \(measurements[index])")
                             .font(.body)
                     }
+                }
             }
-            
         }
         .onAppear {
             APIService().fetchMeal(idMeal: mealId) { result in
